@@ -55,6 +55,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 node scripts/build-adapters.mjs   # 重新生成 dist/
 ```
 
+**不想碰命令行的同事**：`dist/cn-short-prompt.md` 是一段约 700 字的浓缩提示词，整段复制粘贴进豆包 / Kimi / 元宝 / ChatGPT 即可使用，效果等于「装上了但只装了主干」。
+
 **项目级安装示例（Cursor）**
 ```bash
 mkdir -p .cursor/rules
