@@ -21,21 +21,47 @@
 git clone https://github.com/kason564564-jpg/ram-charan-perspective.git
 ```
 
-**Claude Code**
+### 一键安装（Claude Code + DeepSeek Harness）
+
 ```bash
-mkdir -p ~/.claude/skills
-cp -r ram-charan-perspective ~/.claude/skills/
+# macOS / Linux
+bash scripts/install.sh --all
 ```
 
-**DeepSeek Harness / 其他读取 `~/.dsh/skills` 的宿主**
-```bash
-mkdir -p ~/.dsh/skills
-cp -r ram-charan-perspective ~/.dsh/skills/
+```powershell
+# Windows
+powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 ```
 
-**任何支持自定义指令的 Agent（Cursor / Cline / 自建）**：把 `SKILL.md` 全文贴进系统提示或规则文件即可。
+### 主流智能体安装对照表
 
-> 目录名保持 `ram-charan-perspective`，且 `SKILL.md` 在该目录根部——这是技能被自动发现的条件。
+| 智能体 | 装法 | 落地位置 |
+|---|---|---|
+| **Claude Code** | 脚本自动 / 手动复制 | `~/.claude/skills/ram-charan-perspective/`，或项目内 `.claude/skills/` |
+| **DeepSeek Harness (DSH)** | 脚本自动 / 手动复制 | `~/.dsh/skills/ram-charan-perspective/` |
+| **OpenAI Codex CLI** | 追加指令 | `~/.codex/AGENTS.md` 或项目根 `AGENTS.md` ← `dist/agents-md/AGENTS.md` |
+| **Cursor** | 项目规则 | `.cursor/rules/ram-charan.mdc` |
+| **Windsurf** | 项目规则 | `.windsurf/rules/ram-charan.md` |
+| **Cline** | 项目规则 | `.clinerules/ram-charan.md` |
+| **Roo Code** | 项目规则 | `.roo/rules/ram-charan.md` |
+| **GitHub Copilot** | 仓库指令 | `.github/copilot-instructions.md` |
+| **Gemini CLI** | 上下文文件 | 项目根 `GEMINI.md` |
+| **Continue** | 项目规则 | `.continue/rules/ram-charan.md` |
+| **ChatGPT / Kimi / 豆包 / 通用** | 粘贴 | `dist/universal/SYSTEM-PROMPT.md` 贴进「自定义指令」或系统提示词 |
+
+所有格式都由 `SKILL.md` 单一源生成，不手抄：
+
+```bash
+node scripts/build-adapters.mjs   # 重新生成 dist/
+```
+
+**项目级安装示例（Cursor）**
+```bash
+mkdir -p .cursor/rules
+cp dist/cursor/ram-charan.mdc .cursor/rules/
+```
+
+> 规则：目录名保持 `ram-charan-perspective`，`SKILL.md` 在该目录根部——这是 Claude Code / DSH 自动发现的条件。
 
 ## 怎么用
 
@@ -72,11 +98,20 @@ cp -r ram-charan-perspective ~/.dsh/skills/
 
 ```
 ram-charan-perspective/
-├── SKILL.md                      # 技能本体，装它就能用
+├── SKILL.md                      # 唯一源文件，Claude Code / DSH 直接读它
 ├── README.md
 ├── LICENSE
+├── scripts/
+│   ├── build-adapters.mjs        # 由 SKILL.md 生成 9 种宿主格式
+│   ├── install.sh                # macOS / Linux 一键安装
+│   └── install.ps1               # Windows 一键安装
+├── dist/                         # 生成物，各宿主即取即用
+│   ├── cursor/  windsurf/  cline/  roo/
+│   ├── copilot/  gemini/  continue/
+│   ├── agents-md/AGENTS.md       # Codex CLI / OpenCode / 任何 AGENTS.md 宿主
+│   └── universal/SYSTEM-PROMPT.md
 └── references/
-    └── research/                 # 六维调研笔记（提炼过程留痕，非原著正文）
+    └── research/                 # 六维调研笔记（提炼留痕，非原著正文）
         ├── 01-writings.md        # 著作与系统思考
         ├── 02-conversations.md   # 对话与即兴思考
         ├── 03-expression-dna.md  # 表达风格 DNA
