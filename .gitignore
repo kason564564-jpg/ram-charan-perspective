@@ -1,0 +1,16 @@
+# 原著全文与原始语料：受版权保护，永不入库
+references/sources/
+*.pdf
+*.epub
+
+# 逐页原始笔记（含大量原文引文）
+references/research/books/
+_notes_*.md
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.log
